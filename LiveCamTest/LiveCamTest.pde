@@ -12,7 +12,7 @@ void setup() {
   size(640, 480);
   video = new Capture(this, 640, 480);
   opencv = new OpenCV(this, 640, 480);
-  opencv.loadCascade(OpenCV.CASCADE_FRONTALFACE);  
+  opencv.loadCascade("fist.xml");  
 
   video.start();
 }
