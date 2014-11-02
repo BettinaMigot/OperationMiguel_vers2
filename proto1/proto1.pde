@@ -9,10 +9,10 @@ OpenCV opencv;
 int xLastFrame = 0;
 int delta;
 int firstFrame = 1;
+int jump = 0;
 
 void setup() {
   size(640, 480);
-  background(0);
   myMovie = new Movie(this, "video_1_1.mp4");
   myMovie.loop();
   video = new Capture(this, 640, 480);
@@ -30,7 +30,7 @@ void draw() {
   //image(video, 0, 0 );
   float newPos = getPosition();
   if(firstFrame == 1) myMovie.jump(40);
-  else if (newPos != -1.1)
+  else if (newPos != -1.1 && jump == 0)
     myMovie.jump(newPos);
  
   noFill();
@@ -40,14 +40,15 @@ void draw() {
   //println(faces.length);
 
   for (int i = 0; i < faces.length; i++) {
-   // println(faces[i].x + "," + faces[i].y);
-   if(firstFrame == 1) firstFrame = 0;
-    rect(faces[i].x, faces[i].y, faces[i].width, faces[i].height);
-   
+    // println(faces[i].x + "," + faces[i].y);
+    if(firstFrame == 1) firstFrame = 0;
+    //rect(faces[i].x, faces[i].y, faces[i].width, faces[i].height);
     delta = faces[i].x - xLastFrame;
-    if (delta != 0) {println(delta);  }
-     xLastFrame = faces[i].x;
+    if (delta != 0) println(delta);
+    xLastFrame = faces[i].x;
   }
+  
+  nextJump();
 }
 
 void captureEvent(Capture c) {
@@ -60,8 +61,14 @@ void movieEvent(Movie m) {
 
 float getPosition() {
   int movTime = (int)myMovie.time();
-  if (delta > 25 || delta < -25)
-    return movTime-delta/5;
+  if (delta > 20 || delta < -20)
+    return movTime-delta/8;
   else 
     return -1.1;
+}
+
+void nextJump(){
+  ++jump;
+  if (jump == 2)
+    jump = 0;
 }
