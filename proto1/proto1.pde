@@ -15,7 +15,6 @@ void setup() {
   size(640, 480);
   myMovie = new Movie(this, "video_1_1.mp4");
   myMovie.loop();
-  
   video = new Capture(this, 640, 480);
   opencv = new OpenCV(this, 640, 480);
   opencv.loadCascade("fist.xml");
