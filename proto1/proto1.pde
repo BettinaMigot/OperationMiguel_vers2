@@ -28,8 +28,11 @@ void draw() {
   image(myMovie, 0, 0);
 
   //image(video, 0, 0 );
+  float newPos = getPosition();
   if(firstFrame == 1) myMovie.jump(40);
-  else myMovie.jump(getPosition());
+  else if (newPos != -1.1)
+    myMovie.jump(newPos);
+ 
   noFill();
   //stroke(0, 255, 0);
   //strokeWeight(3);
@@ -57,5 +60,8 @@ void movieEvent(Movie m) {
 
 float getPosition() {
   int movTime = (int)myMovie.time();
-  return movTime+delta/10;
+  if (delta > 25 || delta < -25)
+    return movTime-delta/5;
+  else 
+    return -1.1;
 }
